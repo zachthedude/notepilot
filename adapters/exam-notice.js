@@ -9,7 +9,8 @@
   const FEE_RE = /(?:Tk\.?|BDT|৳)\s?[\d,]+(?:\.\d+)?/i;
   const CONTACT_LINE_RE = /contact|helpline|phone|call|tel/i;
   const EMAIL_RE = /[\w.+-]+@[\w-]+(?:\.[\w-]+)+/;
-  const PHONE_RE = /\+?\d[\d-]{7,}\d/;
+  const PHONE_RE = /\+?\d[\d-]{7,}\d/g;
+  const ISO_DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
 
   function splitLines(text) {
     const out = [];
@@ -42,7 +43,7 @@
       if (DEADLINE_LINE_RE.test(t) && (m = DATE_RE.exec(t))) items.push(make('deadline', 'deadline', isoDate(m), m, line));
       if (FEE_LINE_RE.test(t) && (m = FEE_RE.exec(t))) items.push(make('fee', 'fee', m[0], m, line));
       if ((m = EMAIL_RE.exec(t))) items.push(make('contact', 'email', m[0], m, line));
-      if (CONTACT_LINE_RE.test(t) && (m = PHONE_RE.exec(t))) items.push(make('contact', 'phone', m[0], m, line));
+      if (CONTACT_LINE_RE.test(t) && (m = [...t.matchAll(PHONE_RE)].find(p => !ISO_DATE_RE.test(p[0])))) items.push(make('contact', 'phone', m[0], m, line));
     });
     items.forEach((it, i) => { it.id = 'e' + i; });
     return items;

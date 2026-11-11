@@ -82,4 +82,10 @@ const crlf = ExamNotice.extract(CRLF);
 assertSpans(CRLF, crlf, 'CRLF notice');
 assert.strictEqual(crlf.length, 3, 'CRLF notice items');
 
+// Regression: an ISO date on a contact line is not a phone number.
+const HELPLINE = 'Helpline available until 2026-12-15: +880-1800-111111\nHelpline closes 2026-12-20.';
+const helpline = ExamNotice.extract(HELPLINE);
+assertSpans(HELPLINE, helpline, 'helpline dates');
+assert.deepStrictEqual(helpline.filter(i => i.label === 'phone').map(i => i.value), ['+880-1800-111111'], 'dates not taken as phones');
+
 console.log('all checks passed');
