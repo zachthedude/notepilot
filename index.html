@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NoticePilot</title>
+<link rel="icon" href="data:,"><link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <h1>NoticePilot</h1>
+  <p>Turns one public notice into a checklist. Every item quotes its source. Rule-based, not AI.</p>
+</header>
+<main>
+  <section>
+    <label for="notice">Paste a notice</label>
+    <textarea id="notice" rows="8" placeholder="Paste the notice text here"></textarea>
+    <div class="row">
+      <button id="analyze" type="button">Analyze</button>
+      <button id="sample" type="button" class="ghost">Load sample notice</button>
+    </div>
+  </section>
+
+  <section>
+    <h2>Your details <small>(optional, not stored)</small></h2>
+    <div class="grid3">
+      <label>GPA <input id="gpa" type="number" step="0.01" min="0" max="4"></label>
+      <label>Age <input id="age" type="number" min="0" max="120"></label>
+      <label>Programme level <input id="level" type="text" placeholder="e.g. undergraduate"></label>
+    </div>
+  </section>
+
+  <p id="status" role="status"></p>
+
+  <section>
+    <h2>Extracted from the notice</h2>
+    <ul id="items" class="list"></ul>
+  </section>
+
+  <section>
+    <h2>Conflicts</h2>
+    <ul id="conflicts" class="list"></ul>
+  </section>
+
+  <section>
+    <h2>Checklist</h2>
+    <ol id="plan"></ol>
+    <div class="row">
+      <button id="copy" type="button" class="ghost">Copy checklist</button>
+      <span id="copied" role="status"></span>
+    </div>
+  </section>
+</main>
+<footer>Sample data is invented. Nothing is uploaded or stored. This is not official eligibility or an acceptance decision.</footer>
+
+<script src="sample.js"></script>
+<script src="pipeline.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

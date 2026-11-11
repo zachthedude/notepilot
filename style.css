@@ -1,0 +1,33 @@
+:root {
+  --bg: #f7f7f5; --fg: #1d1d1b; --muted: #5d5d58; --card: #ffffff; --line: #d9d9d2;
+  --accent: #1f5f8b; --ok: #2d6a3e; --bad: #8a2b2b; --warn: #8a5a00; --unk: #55555c;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #161615; --fg: #eeeee9; --muted: #a9a9a1; --card: #22221f; --line: #3a3a35;
+    --accent: #7fb6e0; --ok: #86c795; --bad: #f09a9a; --warn: #f0c46b; --unk: #b7b7be;
+  }
+}
+body { margin: 0; font: 16px/1.5 system-ui, sans-serif; background: var(--bg); color: var(--fg); }
+header, main, footer { max-width: 760px; margin: 0 auto; padding: 16px; }
+header h1 { margin-bottom: 4px; }
+header p, #status { color: var(--muted); }
+section { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 16px; margin: 12px 0; }
+h2 { font-size: 1.1rem; margin-top: 0; }
+label { display: block; font-weight: 600; margin-bottom: 8px; }
+textarea, input { width: 100%; box-sizing: border-box; font: inherit; padding: 8px; margin-top: 4px;
+  border: 1px solid var(--line); border-radius: 6px; background: var(--bg); color: var(--fg); }
+button { font: inherit; padding: 8px 14px; border-radius: 6px; cursor: pointer; margin-right: 8px;
+  border: 1px solid var(--accent); background: var(--accent); color: #fff; }
+button.ghost { background: transparent; color: var(--accent); }
+.row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-top: 8px; }
+.grid3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; }
+.list li { margin-bottom: 12px; }
+blockquote { margin: 4px 0 0; padding-left: 10px; border-left: 3px solid var(--line); color: var(--muted); font-size: .92em; }
+.badge { font-size: .75em; font-weight: 700; padding: 1px 6px; border-radius: 4px; margin-left: 4px; text-transform: uppercase; }
+.badge.match { color: var(--ok); }
+.badge.no_match { color: var(--bad); }
+.badge.unknown { color: var(--unk); }
+.warn { color: var(--warn); font-weight: 600; }
+footer { color: var(--muted); font-size: .85em; }
+@media (max-width: 480px) { header, main, footer { padding: 12px; } }
