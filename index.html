@@ -4,54 +4,128 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>NoticePilot</title>
-<link rel="icon" href="data:,"><link rel="stylesheet" href="style.css">
+<meta name="description" content="Paste a public notice. NoticePilot lists its deadlines, fees, documents and rules, quotes the sentence each one came from, and builds a checklist.">
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600&family=Work+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header>
-  <h1>NoticePilot</h1>
-  <p>Turns one public notice into a checklist. Every item quotes its source. Rule-based, not AI.</p>
+<header class="top">
+  <a class="brand" href="#top">NoticePilot</a>
+  <a class="btn small" href="#demo">Try the demo</a>
 </header>
+
 <main>
-  <section>
-    <label for="notice">Paste a notice</label>
-    <textarea id="notice" rows="8" placeholder="Paste the notice text here"></textarea>
-    <div class="row">
-      <button id="analyze" type="button">Analyze</button>
-      <button id="sample" type="button" class="ghost">Load sample notice</button>
+  <section class="hero" id="top">
+    <div class="hero-copy">
+      <h1>Every deadline in a notice, with the sentence it came from.</h1>
+      <p class="lede">Paste a scholarship or exam notice. NoticePilot finds its dates, fees, documents and rules, shows the exact quote for each one, and turns them into a checklist you can copy.</p>
+      <div class="actions">
+        <a class="btn" href="#demo">Try it on the sample</a>
+        <a class="btn ghost" href="#how">See how it works</a>
+      </div>
+      <p class="fine">Rule-based, not AI. Nothing you paste leaves your browser.</p>
+    </div>
+    <figure class="hero-doc" aria-label="Example: a deadline found in a notice, with its source line">
+      <p class="doc-line muted-line">Required documents: Official transcript, National ID copy, Passport-size photo.</p>
+      <p class="doc-line muted-line">Application fee: Tk 500 (non-refundable).</p>
+      <p class="doc-line">Application deadline: <mark class="sweep">15 December 2026</mark>.</p>
+      <p class="doc-line muted-line">Contact: scholarship@example.org</p>
+      <figcaption class="doc-tag"><strong>Deadline</strong> 2026-12-15, quoted from line 8</figcaption>
+    </figure>
+  </section>
+
+  <section class="story" id="how" aria-labelledby="how-title">
+    <h2 id="how-title" class="section-title">How it reads a notice</h2>
+    <div class="story-grid">
+      <div class="stage-wrap">
+        <div class="stage" id="stage" data-step="1">
+          <p class="stage-label">Sample notice (invented for this demo)</p>
+          <div id="stage-text" class="stage-text"></div>
+          <div class="stage-out">
+            <p class="stage-label">Checklist for GPA 3.7, age 24, undergraduate</p>
+            <ol id="stage-plan"></ol>
+          </div>
+        </div>
+      </div>
+      <div class="steps">
+        <article class="step" data-step="1">
+          <h3>Paste any public notice.</h3>
+          <p>It stays in your browser. Nothing is sent to a server or saved.</p>
+        </article>
+        <article class="step" data-step="2">
+          <h3>It finds what the notice asks of you.</h3>
+          <p>Deadlines, fees, required documents, eligibility rules and contacts, each one marked where it appears.</p>
+        </article>
+        <article class="step" data-step="3">
+          <h3>Every item keeps its exact source.</h3>
+          <p>The sentence it came from sits beside it, with the line number. If an item can't be quoted, it isn't shown.</p>
+        </article>
+        <article class="step" data-step="4">
+          <h3>Two dates for one deadline?</h3>
+          <p>NoticePilot flags the conflict and tells you to confirm with the issuer. It never picks one for you.</p>
+        </article>
+        <article class="step" data-step="5">
+          <h3>Answer up to three questions.</h3>
+          <p>Each rule comes back as match, no match or unknown. A question you skip stays unknown.</p>
+        </article>
+        <article class="step" data-step="6">
+          <h3>Copy your checklist.</h3>
+          <p>Conflicts first, then deadlines, documents, fees and contacts, ready to paste into your notes.</p>
+        </article>
+      </div>
     </div>
   </section>
 
-  <section>
-    <h2>Your details <small>(optional, not stored)</small></h2>
-    <div class="grid3">
-      <label>GPA <input id="gpa" type="number" step="0.01" min="0" max="4"></label>
-      <label>Age <input id="age" type="number" min="0" max="120"></label>
-      <label>Programme level <input id="level" type="text" placeholder="e.g. undergraduate"></label>
-    </div>
-  </section>
+  <section class="demo" id="demo" aria-labelledby="demo-title">
+    <h2 id="demo-title" class="section-title">Try it</h2>
+    <p class="muted">Paste your own notice or load the sample. Your details are optional and never stored.</p>
 
-  <p id="status" role="status"></p>
+    <div class="demo-grid">
+      <div class="panel">
+        <label for="notice">Notice text</label>
+        <textarea id="notice" rows="9" placeholder="Paste the notice text here"></textarea>
+        <div class="row">
+          <button id="analyze" type="button" class="btn">Analyze notice</button>
+          <button id="sample" type="button" class="btn ghost">Load sample</button>
+        </div>
+        <fieldset class="fields">
+          <legend>Your details</legend>
+          <label>GPA <input id="gpa" type="number" step="0.01" min="0" max="5" inputmode="decimal"></label>
+          <label>Age <input id="age" type="number" min="0" max="120" inputmode="numeric"></label>
+          <label>Programme level <input id="level" type="text" placeholder="e.g. undergraduate"></label>
+        </fieldset>
+      </div>
 
-  <section>
-    <h2>Extracted from the notice</h2>
-    <ul id="items" class="list"></ul>
-  </section>
-
-  <section>
-    <h2>Conflicts</h2>
-    <ul id="conflicts" class="list"></ul>
-  </section>
-
-  <section>
-    <h2>Checklist</h2>
-    <ol id="plan"></ol>
-    <div class="row">
-      <button id="copy" type="button" class="ghost">Copy checklist</button>
-      <span id="copied" role="status"></span>
+      <div class="results">
+        <p id="status" role="status" class="muted"></p>
+        <div class="panel">
+          <h3>Found in the notice</h3>
+          <ul id="items" class="list"></ul>
+        </div>
+        <div class="panel">
+          <h3>Conflicts</h3>
+          <ul id="conflicts" class="list"></ul>
+        </div>
+        <div class="panel">
+          <h3>Checklist</h3>
+          <ol id="plan" class="plan"></ol>
+          <div class="row">
+            <button id="copy" type="button" class="btn ghost">Copy checklist</button>
+            <span id="copied" role="status" class="muted"></span>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 </main>
-<footer>Sample data is invented. Nothing is uploaded or stored. This is not official eligibility or an acceptance decision.</footer>
+
+<footer class="foot">
+  <p>The sample notice is invented. NoticePilot does not decide official eligibility or acceptance. Always confirm with the issuer.</p>
+  <p><a href="https://github.com/zachthedude/notepilot">Source on GitHub</a></p>
+</footer>
 
 <script src="sample.js"></script>
 <script src="pipeline.js"></script>
