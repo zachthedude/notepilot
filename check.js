@@ -76,4 +76,10 @@ const tk = ExamNotice.extract(TK);
 assertSpans(TK, tk, 'Tk fee');
 assert.deepStrictEqual(tk.filter(i => i.type === 'fee').map(i => i.value), ['Tk 1,500', 'Tk. 250'], 'Tk fees extracted');
 
+// Regression: CRLF input keeps spans valid against the raw notice.
+const CRLF = 'Registration fee: BDT 800\r\nRegistration deadline: 30 November 2026\r\nContact: exams@example.org';
+const crlf = ExamNotice.extract(CRLF);
+assertSpans(CRLF, crlf, 'CRLF notice');
+assert.strictEqual(crlf.length, 3, 'CRLF notice items');
+
 console.log('all checks passed');

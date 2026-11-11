@@ -32,8 +32,9 @@
     return `${m[3]}-${String(month).padStart(2, '0')}-${String(m[1]).padStart(2, '0')}`;
   }
 
+  // Spans index into `text` as given; CRLF is not normalized so offsets stay valid for the caller.
   function extract(text) {
-    const notice = String(text || '').replace(/\r\n/g, '\n');
+    const notice = String(text || '');
     const items = [];
     splitLines(notice).forEach(line => {
       const t = line.text;
